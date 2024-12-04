@@ -1,10 +1,16 @@
-<app-header title="Menú"></app-header>
+<ion-menu contentId="menu-content" menuId="menu-content" side="start">
 
-<ion-content>
-  <ion-menu-toggle autoHide="false" *ngFor="let p of pages">
-    <ion-item [ngClass]="{'active': currentPath === p.url}" [routerLink]="p.url" routerDirection="root" detail>
-      <ion-icon slot="start" [name]="p.icon"></ion-icon>
-      <ion-label>{{p.title}}</ion-label>
-    </ion-item>
-  </ion-menu-toggle>
-</ion-content>
+  <app-header title="Menú"></app-header>
+
+  <ion-content>
+    <ion-menu-toggle autoHide="false" *ngFor="let p of pages">
+      <ion-item [ngClass]="{'active': currentPath === p.url}" [routerLink]="p.url" routerDirection="root" detail>
+        <ion-icon slot="start" [name]="p.icon"></ion-icon>
+        <ion-label>{{ p.title }}</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-content>
+
+</ion-menu>
+
+<ion-router-outlet id="menu-content" main ></ion-router-outlet>
