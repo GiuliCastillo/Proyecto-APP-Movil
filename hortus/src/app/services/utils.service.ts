@@ -1,9 +1,12 @@
-import { Injectable } from '@angular/core';
-
+import { Injectable, inject } from '@angular/core';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
+  router = inject(Router);
 
-  constructor() { }
+routerLink(url: any) {
+  this.router.navigateByUrl(url)
+}
 }

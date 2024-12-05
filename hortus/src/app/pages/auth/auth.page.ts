@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-auth',
@@ -11,6 +12,7 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 export class AuthPage implements OnInit {
 
   firebaseService = inject(FirebaseService);
+  utilsService = inject(UtilsService);
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -25,7 +27,9 @@ export class AuthPage implements OnInit {
     if(this.form.valid){
       this.firebaseService.signIn(this.form.value as User)
         .then(resp =>{
-          console.log('_____', resp);
+          
+          this.utilsService.routerLink('/main/home')
+          
         })
     }
   }
