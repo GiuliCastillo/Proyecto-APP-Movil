@@ -38,4 +38,8 @@ export class FirebaseService {
   async getDocument(path: any) {
     return (await getDoc(doc(getFirestore(),path))).data()
   }
+
+  sendRecoveryEmail(email: string) {
+    return sendPasswordResetEmail(getAuth(), email);
+  }
 }
