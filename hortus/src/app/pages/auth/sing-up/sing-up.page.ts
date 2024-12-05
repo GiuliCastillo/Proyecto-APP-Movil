@@ -61,7 +61,7 @@ export class SingUpPage implements OnInit {
 
       await loading.present();
 
-      let path = 'users/${uid}';
+      let path = `users/${uid}`;
       delete this.form.value.password;
 
       this.firebaseService.setDocument(path, this.form.value)
