@@ -8,13 +8,21 @@
       <app-logo></app-logo>
 
       <!--Aquí va el correo--> 
-      <app-login-input></app-login-input>
+      <app-login-input autocomplete="email"
+      type="email"
+      label="Correo"
+      icon="mail-outline"
+      ></app-login-input>
 
       <!--Esto valida el correo-->
       <div class="validators"></div>
 
       <!--Aquí va la contraseña--> 
-      <app-login-input></app-login-input>
+      <app-login-input
+      type="password"
+      label="Contraseña"
+      icon="Lock-closed-outline"
+      ></app-login-input>
 
       <!--Esto valida la contraseña-->
       <div class="validators"></div>
