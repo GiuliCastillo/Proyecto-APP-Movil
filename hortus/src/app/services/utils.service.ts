@@ -27,4 +27,8 @@ async presentToast(opts?: ToastOptions){
 saveLocalStorage(key:string, value:any) {
   return localStorage.setItem(key, JSON.stringify(value))
 }
+
+getLocalStorage(key: string) {
+  return JSON.parse(localStorage.getItem(key));
+}
 }

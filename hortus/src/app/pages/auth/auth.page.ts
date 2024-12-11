@@ -28,24 +28,29 @@ export class AuthPage implements OnInit {
       const loading = await this.utilsService.loading();
 
       await loading.present();
+      console.log(this.form.value as User);
 
-      this.firebaseService.signIn(this.form.value as User)
+
+      //esto es una promesa
+        this.firebaseService.signIn(this.form.value as User)
         .then(resp => {
+          console.log(resp);
 
           this.getUserInfo(resp.user.uid);
 
         }).catch(error => {
-          console.log(error);
           this.utilsService.presentToast({
-            message: error.message,
-            duration: 2500,
+            message: "Credenciales inválidas, por favor intente de nuevo",
+            duration: 4000,
             color: 'danger',
             position: 'bottom',
             icon: 'alert-circle-outline'
           })
         }).finally(() => {
+          //se ejecuta siosi
           loading.dismiss();
         })
+      
     }
   }
 
@@ -56,9 +61,11 @@ export class AuthPage implements OnInit {
       await loading.present();
 
       let path = `users/${uid}`;
+      console.log(path);
 
       this.firebaseService.getDocument(path)
         .then((user: User) => {
+          console.log(user);
 
           this.utilsService.saveLocalStorage('user', user);
           this.utilsService.routerLink('main/home');

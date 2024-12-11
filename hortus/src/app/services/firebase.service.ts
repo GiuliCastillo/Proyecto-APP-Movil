@@ -38,8 +38,15 @@ export class FirebaseService {
   }
 
   async getDocument(path: any) {
-    return (await getDoc(doc(getFirestore(),path))).data()
+    const docRef = doc(getFirestore(), path); // Referencia al documento
+    const docSnapshot = await getDoc(docRef); // Obtener el snapshot
+    if (!docSnapshot.exists()) {
+      console.error(`El documento en la ruta "${path}" no existe.`);
+      return null; // Devuelve null si el documento no existe
+    }
+    return docSnapshot.data(); // Devuelve los datos si el documento existe
   }
+  
 
   sendRecoveryEmail(email: string) {
     return sendPasswordResetEmail(getAuth(), email);
