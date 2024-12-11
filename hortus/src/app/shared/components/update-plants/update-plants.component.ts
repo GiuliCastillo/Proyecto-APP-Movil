@@ -21,7 +21,7 @@ export class UpdatePlantsComponent implements OnInit {
     name: new FormControl('', [Validators.required]),
     tipo: new FormControl('', [Validators.required]),
     tiempoMaduracion: new FormControl('', [Validators.required]),
-    //img: new FormControl('', [Validators.required])
+    img: new FormControl('', [Validators.required])
 
 
   })
@@ -43,6 +43,12 @@ export class UpdatePlantsComponent implements OnInit {
 
 
     //}
+  }
+
+  async takeImage() {
+    //estrae la reespuesta
+    const dataUrl = (await this.utilsService.takePicture('Imagen de la planta')).dataUrl 
+    this.form.controls.img.setValue(dataUrl)
   }
 
 }
