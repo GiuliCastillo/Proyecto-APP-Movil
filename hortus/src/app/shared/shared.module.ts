@@ -5,6 +5,7 @@ import { LoginInputComponent } from './components/login-input/login-input.compon
 import { LogoComponent } from './components/logo/logo.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { UpdatePlantsComponent } from './components/update-plants/update-plants.component';
 
 
 
@@ -12,7 +13,8 @@ import { IonicModule } from '@ionic/angular';
   declarations: [
     HeaderComponent,
     LoginInputComponent,
-    LogoComponent
+    LogoComponent,
+    UpdatePlantsComponent
   ],
   exports: [
     HeaderComponent,
