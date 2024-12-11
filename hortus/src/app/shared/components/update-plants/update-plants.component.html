@@ -1,5 +1,46 @@
 <app-header [isModal]="true" title="Agregar"></app-header>
 
 <ion-content>
-  hola
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="ion-padding ion-text-center" (keypress.enter)="submit()">
+
+
+    <!--Aquí va el nombre-->
+    <app-login-input autocomplete="name" type="text" label="Nombre" [control]="form.controls.name">
+    </app-login-input>
+
+    <!--Aquí valida los datos-->
+    <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.touched">
+      <div *ngIf="form.controls.name.errors?.['required']">El nombre es requerido</div>
+      <!--<div *ngIf="form.controls.name.errors?.['minLength']">El nombre debe contener 3 carácteres</div>-->
+    </div>
+
+    <!--Tipo-->
+    <app-login-input autocomplete="tipo" type="text" label="Tipo" [control]="form.controls.tipo">
+    </app-login-input>
+
+    <div class="validators" *ngIf="form.controls.tipo.errors && form.controls.tipo.touched">
+      <div *ngIf="form.controls.tipo.errors?.['required']">El tipo de planta es requerido</div>
+    </div>
+
+    <!--Tiempo de maduración-->
+    <app-login-input autocomplete="tiempoMaduracion" type="text" label="Tiempo de maduración"
+      [control]="form.controls.tiempoMaduracion">
+    </app-login-input>
+
+    <div class="validators" *ngIf="form.controls.tiempoMaduracion.errors && form.controls.tiempoMaduracion.touched">
+      <div *ngIf="form.controls.tiempoMaduracion.errors?.['required']">El tiempo de maduracion es requerido</div>
+    </div>
+
+
+
+
+    <ion-button class="submit" type="submit" [disabled]="form.invalid">
+      Agregar planta
+      <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+    </ion-button>
+
+
+  </form>
+
 </ion-content>
