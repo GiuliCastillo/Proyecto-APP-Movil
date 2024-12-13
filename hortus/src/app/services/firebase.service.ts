@@ -60,7 +60,7 @@ export class FirebaseService {
     this.utilsService.routerLink('/auth');
   }
 
-  //formulario
+  //formulario modal
   async addDocumentToFirestore(path: string, data: any) {
     try {
       const colRef = this.firestore.collection(path); // Colección en AngularFirestore
