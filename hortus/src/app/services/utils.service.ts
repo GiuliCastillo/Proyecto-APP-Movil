@@ -52,14 +52,13 @@ export class UtilsService {
     return await Camera.getPhoto({
       quality: 90,
       allowEditing: true,
-      resultType: CameraResultType.DataUrl,
-      source: CameraSource.Prompt, //elegir camara o galeria
+      resultType: CameraResultType.DataUrl, // Devuelve el DataUrl
+      source: CameraSource.Prompt, // Elegir cámara o galería
       promptLabelHeader,
       promptLabelPhoto: 'Selecciona una imagen',
-      promptLabelPicture: 'Toma una foto'
+      promptLabelPicture: 'Toma una foto',
     });
-    
-  };
+  }
 
   async getCurrentPosition() {
     try {

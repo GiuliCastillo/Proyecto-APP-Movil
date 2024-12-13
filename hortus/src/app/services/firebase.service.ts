@@ -5,8 +5,9 @@ import { getAuth, signInWithEmailAndPassword,
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { User } from '../models/user.model';
-import { doc, getDoc, getFirestore, setDoc } from '@angular/fire/firestore';
+import { addDoc, collection, doc, getDoc, getFirestore, setDoc, Firestore } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
+import { getDatabase, ref, push } from 'firebase/database';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class FirebaseService {
   auth = inject(AngularFireAuth);
   firestore = inject(AngularFirestore);
   utilsService = inject(UtilsService);
+
 
   getAuth(){
     return getAuth();
@@ -56,5 +58,31 @@ export class FirebaseService {
     getAuth().signOut();
     localStorage.removeItem('user');
     this.utilsService.routerLink('/auth');
+  }
+
+  //formulario
+  async addDocumentToFirestore(path: string, data: any) {
+    try {
+      const colRef = this.firestore.collection(path); // Colección en AngularFirestore
+      const docRef = await colRef.add(data); // Añadir documento
+      console.log('Documento guardado en Firestore:', docRef.id);
+      return docRef;
+    } catch (error) {
+      console.error('Error al guardar en Firestore:', error);
+      throw error;
+    }
+  }
+
+  async saveImageToRealtimeDatabase(imageDataUrl: string) {
+    try {
+      const db = getDatabase(); // Instancia de Realtime Database
+      const dbRef = ref(db, 'plantImages'); // Referencia al nodo 'plantImages'
+      const newImageRef = await push(dbRef, { imageUrl: imageDataUrl }); // Guardar imagen
+      console.log('Imagen guardada en Realtime Database con ID:', newImageRef.key);
+      return newImageRef; // Retorna la referencia del nodo creado
+    } catch (error) {
+      console.error('Error al guardar en Realtime Database:', error);
+      throw error;
+    }
   }
 }

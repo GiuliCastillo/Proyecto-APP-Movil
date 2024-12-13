@@ -20,7 +20,9 @@ export class UpdatePlantsComponent implements OnInit {
     id: new FormControl(''),
     name: new FormControl('', [Validators.required]),
     tipo: new FormControl('', [Validators.required]),
-    tiempoMaduracion: new FormControl('', [Validators.required]),
+    riego: new FormControl('', [Validators.required]),
+    ubicacion: new FormControl('', [Validators.required]),
+    fecha: new FormControl('', [Validators.required]),
     img: new FormControl('', [Validators.required])
 
 
@@ -31,24 +33,38 @@ export class UpdatePlantsComponent implements OnInit {
   ngOnInit() {
   }
 
-  async submit() {
-    //if (this.form.valid) {
-      //const loading = await this.utilsService.loading();
+  async guardarPlanta() {
+    if (this.form.valid) {
+      try {
+        const imageUrl = this.form.value.img; // Obtén la URL de la imagen desde el formulario
 
-      //await loading.present();
-      console.log(this.form.value);
+        // 1. Guarda la imagen en Realtime Database
+        const imageResult = await this.firebaseService.saveImageToRealtimeDatabase(imageUrl);
+        console.log('Imagen guardada en Realtime Database:', imageResult.key);
 
+        // 2. Guarda los datos del formulario en Firestore
+        const planta = this.form.value; 
+        const firestoreResult = await this.firebaseService.addDocumentToFirestore('plantas', planta);
+        console.log('Planta guardada en Firestore:', firestoreResult.id);
 
-
-
-
-    //}
+        this.form.reset(); // Limpia el formulario
+      } catch (error) {
+        console.error('Error al guardar la planta o la imagen:', error);
+      }
+    } else {
+      console.error('Formulario no válido');
+    }
   }
 
+  // Captura la imagen usando el servicio utils.service.ts
   async takeImage() {
-    //estrae la reespuesta
-    const dataUrl = (await this.utilsService.takePicture('Imagen de la planta')).dataUrl 
-    this.form.controls.img.setValue(dataUrl)
+    try {
+      const image = await this.utilsService.takePicture('Selecciona una foto');
+      const imageUrl = await this.firebaseService.saveImageToRealtimeDatabase(image.dataUrl);
+      this.form.controls['img'].setValue(image.dataUrl); // Guardar el DataUrl en el formulario
+    } catch (error) {
+      console.error('Error al capturar la imagen:', error);
+    }
   }
 
 }
