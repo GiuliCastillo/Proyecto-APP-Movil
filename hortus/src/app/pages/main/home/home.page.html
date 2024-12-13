@@ -1,41 +1,47 @@
 <app-header [showMenu]="true" title="Inicio"></app-header>
 <ion-content>
-  <ion-list>
-    <ion-item-sliding class="product-item">
+  <!-- Mostrar mensaje de carga -->
+  <div *ngIf="loading" class="loading">Cargando plantas...</div>
+
+  <!-- Mostrar lista de plantas si existen -->
+  <ion-list *ngIf="!loading && plantas.length > 0">
+    <ion-item-sliding class="product-item" *ngFor="let planta of plantas">
       <ion-item>
         <ion-avatar slot="start">
-          <img src="../../../../assets/palto.png" alt="">
+          <img [src]="planta.img || '../../../../assets/default-plant.png'" alt="{{ planta.name }}" />
         </ion-avatar>
         <ion-label>
-          <div class="name">Palto</div>
+          <div class="name">{{ planta.name }}</div>
           <div class="data">
-
-            <strong>Tipo: </strong> {{ 'Vegetal' }} <br>
-            <strong>Tiempo de maduración: </strong> {{ '3 meses' }} <br>
-
+            <strong>Tipo: </strong> {{ planta.tipo }} <br>
+            <strong>Tipo de riego: </strong> {{ planta.riego }} <br>
+            <strong>Ubicación: </strong> {{ planta.ubicacion }} <br>
+            <strong>Fecha: </strong> {{ planta.fecha }} <br>
           </div>
         </ion-label>
       </ion-item>
 
+      <!-- Opciones de edición/eliminación -->
       <ion-item-options>
-
-        <ion-item-option>
+        <ion-item-option (click)="editPlant(planta)">
           <ion-icon class="option-btn" name="create-outline"></ion-icon>
         </ion-item-option>
-      
-        <ion-item-option color="danger">
+        <ion-item-option color="danger" (click)="deletePlant(planta)">
           <ion-icon class="option-btn" name="trash-outline"></ion-icon>
         </ion-item-option>
-
       </ion-item-options>
-
     </ion-item-sliding>
   </ion-list>
 
+  <!-- Mostrar mensaje si no hay plantas -->
+  <div *ngIf="!loading && plantas.length === 0" class="no-data">
+    <p>No hay plantas disponibles.</p>
+  </div>
+
+  <!-- Botón flotante para añadir plantas -->
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button (click)="addUpdatePlants()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  
 </ion-content>

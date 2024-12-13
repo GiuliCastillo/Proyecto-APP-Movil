@@ -5,7 +5,8 @@ import { getAuth, signInWithEmailAndPassword,
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { User } from '../models/user.model';
-import { addDoc, collection, doc, getDoc, getFirestore, setDoc, Firestore } from '@angular/fire/firestore';
+import { Plantas } from '../models/plantas.model';
+import { addDoc, collection, doc, getDoc, getFirestore, setDoc, Firestore, getDocs } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
 import { getDatabase, ref, push } from 'firebase/database';
 
@@ -85,4 +86,22 @@ export class FirebaseService {
       throw error;
     }
   }
+
+  //Obtener los datos de firebase
+  async getPlants(): Promise<Plantas[]> {
+    try {
+      const snapshot = await this.firestore.collection<Plantas>('plantas').get().toPromise();
+
+      const plantas: Plantas[] = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...(doc.data() as Omit<Plantas, 'id'>),
+      }));
+
+      return plantas;
+    } catch (error) {
+      console.error('Error al obtener plantas:', error);
+      throw error;
+    }
+  }
+  
 }

@@ -48,6 +48,7 @@ export class UtilsService {
     return this.modalCtrl.dismiss(data);
   }
 
+  //funcion para fotos en el modal
   async takePicture(promptLabelHeader: string) {
     return await Camera.getPhoto({
       quality: 90,
@@ -60,6 +61,7 @@ export class UtilsService {
     });
   }
 
+  //geolocalizacion
   async getCurrentPosition() {
     try {
       const coordinates = await Geolocation.getCurrentPosition();
